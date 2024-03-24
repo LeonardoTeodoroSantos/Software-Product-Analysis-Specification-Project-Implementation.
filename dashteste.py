@@ -200,7 +200,8 @@ def drilldown(click_data, n_clicks, toggle):
                         y="Empregado com carteira de trabalho assinada",
                         color='Estados', template=template)
                     fig.update_layout(
-                        title='<b>Carteira de trabalho assinada no {}<b>'.format(vendor)),
+                        title='<b>Carteira de trabalho assinada no {}<b>'
+                        .format(vendor)),
                     return fig, {'display': 'block'}
                 if vendor == 'Nordeste':
                     est_tra = df3.loc[(df3['Estados'] == 'Maranhão')
@@ -219,8 +220,8 @@ def drilldown(click_data, n_clicks, toggle):
                         y='Empregado com carteira de trabalho assinada',
                         color='Estados', template=template)
                     fig.update_layout(
-                            title='<b>Carteira de trabalho assinada no {}<b>'.format(
-                                vendor))
+                            title='<b>Carteira de trabalho assinada no {}<b>'
+                            .format(vendor))
                     return fig, {'display': 'block'}
                 if vendor == 'Centro-Oeste':
                     est_tra = df3.loc[(df3['Estados'] == 'Mato Grosso do Sul')
@@ -233,8 +234,8 @@ def drilldown(click_data, n_clicks, toggle):
                         y='Empregado com carteira de trabalho assinada',
                         color='Estados', template=template)
                     fig.update_layout(
-                            title='<b>Carteira de trabalho assinada no {}<b>'.format(
-                                vendor))
+                            title='<b>Carteira de trabalho assinada no {}<b>'
+                            .format(vendor))
                     return fig, {'display': 'block'}
                 if vendor == 'Sudeste':
                     est_tra = df3.loc[(df3['Estados'] == 'Minas Gerais')
@@ -247,8 +248,8 @@ def drilldown(click_data, n_clicks, toggle):
                         y='Empregado com carteira de trabalho assinada',
                         color='Estados', template=template)
                     fig.update_layout(
-                            title='<b>Carteira de trabalho assinada no {}<b>'.format(
-                                vendor))
+                            title='<b>Carteira de trabalho assinada no {}<b>'
+                            .format(vendor))
                     return fig, {'display': 'block'}
                 if vendor == 'Sul':
                     est_tra = df3.loc[(
@@ -261,8 +262,8 @@ def drilldown(click_data, n_clicks, toggle):
                         y='Empregado com carteira de trabalho assinada',
                         color='Estados', template=template)
                     fig.update_layout(
-                            title='<b>Carteira de trabalho assinada no {}<b>'.format(
-                                vendor))
+                            title='<b>Carteira de trabalho assinada no {}<b>'
+                            .format(vendor))
                     return fig, {'display': 'block'}
             else:   # escondendo o botão Voltar
                 return est_bar(), {'display': 'none'}
