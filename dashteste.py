@@ -49,8 +49,7 @@ df2 = df2.drop(
 df3.dropna(how='all', inplace=True)
 df3['Ano'] = df3['Ano'].dt.year
 df3.drop('coeficiente', axis=1, inplace=True)
-# pd.options.display.float_format = '{:.2f}'.format
-# pd.set_option('display.precision', 2)
+
 # A variavel "reg" é a tabela nova, com "regiões" tratadas
 reg = df3.loc[(df3['Regiões'] == 'Norte') | (df3['Regiões'] == 'Nordeste')
               | (df3['Regiões'] == 'Sudeste') | (df3['Regiões'] == 'Sul')
@@ -70,7 +69,6 @@ bra = bra.dropna(subset='Total_Brasil')
 bra = bra.drop(['Regiões', 'Estados', 'Total'], axis=1)
 
 # Criação de variáveis
-
 opcoes = list(df2['Ano'].unique())
 opcoes.append('Todos os anos')
 
