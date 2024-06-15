@@ -1,12 +1,13 @@
-from dash import Dash, html, dcc, Input, Output
-import plotly.express as px
 import dash
+from dash import html, dcc, Input, Output
+from dash import register_page, get_asset_url, callback
+import plotly.express as px
 import pandas as pd
 import dash_bootstrap_components as dbc
 import plotly.graph_objects as go
 import json
 
-app = Dash(__name__, external_stylesheets=[dbc.themes.FLATLY])
+register_page(__name__, name="AC2", path='/pg2', external_stylesheets=[dbc.themes.YETI])
 
 CENTER_LAT, CENTER_LON = -15.764401, -51.294193
 
@@ -58,16 +59,16 @@ fig2.update_layout(autosize=True,
 
 # ---------------------------------------------------------------------------------------------
 # Layout HTML
-app.layout = dbc.Container([
+layout = dbc.Container([
     # Row 1
     dbc.Row([
         dbc.Col([
             html.Div([
-                html.Img(id="logo", src=app.get_asset_url("ibge.png"),
+                html.Img(id="logo", src=get_asset_url("ibge.png"),
                          height=50),
                 html.H5(
                     children="Dados do IBGE sobre Padrão de vida e Rendimentos"),
-                dbc.Button("BRASIL", color="info", id="location-button",
+                dbc.Button("BRASIL", color="info", id="button-location",
                            size="lg")
                 ], style={}),
             html.P("Selecione o ano desejado:", style={"margin-top": "15px"}),
@@ -160,7 +161,7 @@ app.layout = dbc.Container([
 # callbacks
 
 
-@app.callback(
+@callback(
     [
         Output("rend-s-auxilio", "children"),
         Output("rend-c-auxilio", "children"),
@@ -169,7 +170,7 @@ app.layout = dbc.Container([
         Output("rend-branca", "children"),
         Output("rend-preta", "children"),
         ],
-    [Input("list_years", "value"), Input("location-button", "children")]
+    [Input("list_years", "value"), Input("button-location", "children")]
 )
 def display_status(value, location):
     if location == "BRASIL":
@@ -197,10 +198,8 @@ def display_status(value, location):
             raça_preta,)
 
 
-@app.callback(Output("line_graph", "figure"),
-              [
-                  Input("location-button", "children")
-              ])
+@callback(Output("line_graph", "figure"),
+          [Input("button-location", "children")])
 def plot_line_graph(location):
     if location == "BRASIL":
         df_data_on_location = PerCapitaBra.copy()
@@ -258,7 +257,7 @@ def plot_line_graph(location):
     return fig2
 
 
-@app.callback(
+@callback(
     Output("graph_map", "figure"),
     [Input("list_years", "value")]
 )
@@ -292,18 +291,14 @@ def update_map(value):
     return fig1
 
 
-@app.callback(
-    Output("location-button", "children"),
-    [Input("graph_map", "clickData"), Input("location-button", "n_clicks")]
+@callback(
+    Output("button-location", "children"),
+    [Input("graph_map", "clickData"), Input("button-location", "n_clicks")]
 )
 def update_location(click_data, n_clicks):
     changed_id = [p["prop_id"] for p in dash.callback_context.triggered][0]
-    if click_data is not None and changed_id != "location-button.n_clicks":
+    if click_data is not None and changed_id != "button-location.n_clicks":
         state = click_data["points"][0]["location"]
         return "{}".format(state)
     else:
         return "BRASIL"
-
-
-if __name__ == '__main__':
-    app.run(debug=True)

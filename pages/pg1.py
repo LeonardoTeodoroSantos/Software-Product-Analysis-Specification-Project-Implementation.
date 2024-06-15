@@ -1,10 +1,11 @@
-from dash import Dash, html, dcc, Input, Output, callback
+from dash import html, dcc, Input, Output
+from dash import callback, register_page
 import dash
 import plotly.express as px
 import pandas as pd
 import dash_bootstrap_components as dbc
 
-app = Dash(__name__, external_stylesheets=[dbc.themes.YETI])
+register_page(__name__, name="AC1", path='/pg1', external_stylesheets=[dbc.themes.YETI])
 
 # Reading dates
 df2 = pd.read_excel('Regiões.xlsx', engine='openpyxl')
@@ -99,7 +100,7 @@ def est_bar():
     return fig
 
 
-app.layout = dbc.Container([
+layout = dbc.Container([
     # Row 1
     dbc.Row([
         dbc.Col([
@@ -319,7 +320,3 @@ def update_output(value):
                       color="Regiões",
                       title='População Desocupada')
     return fig4, fig2, fig3
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
